@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated Oct 16, 2016 7:26:16 PM by Hibernate Tools 3.4.0.CR1 -->
+<hibernate-mapping>
+    <class name="edu.columbia.riverLife.dal.implementation.hibernate.bean.StudentSalinityHbm" table="student_salinity" schema="riverlife">
+        <id name="studentSalinityId" type="int">
+            <column name="student_salinity_id" />
+            <generator class="assigned" />
+        </id>
+        <many-to-one name="salinityMethodHbm" class="edu.columbia.riverLife.dal.implementation.hibernate.bean.SalinityMethodHbm" fetch="select">
+            <column name="salinity_method_id" not-null="true" />
+        </many-to-one>
+        <many-to-one name="siteSamplingHbm" class="edu.columbia.riverLife.dal.implementation.hibernate.bean.SiteSamplingHbm" fetch="select">
+            <column name="site_sampling_id" not-null="true" />
+        </many-to-one>
+        <property name="salinityTime" type="time">
+            <column name="salinity_time" length="15" />
+        </property>
+        <property name="totalSalinityPpm" type="java.lang.Integer">
+            <column name="total_salinity_ppm" />
+        </property>
+        <property name="notes" type="string">
+            <column name="notes" length="500" />
+        </property>
+    </class>
+</hibernate-mapping>

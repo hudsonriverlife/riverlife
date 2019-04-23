@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated Oct 16, 2016 7:26:16 PM by Hibernate Tools 3.4.0.CR1 -->
+<hibernate-mapping>
+    <class name="edu.columbia.riverLife.dal.implementation.hibernate.bean.TideObservationHbm" table="tide_observation" schema="riverlife">
+        <id name="tideObservationId" type="int">
+            <column name="tide_observation_id" />
+            <generator class="assigned" />
+        </id>
+        <many-to-one name="siteSamplingHbm" class="edu.columbia.riverLife.dal.implementation.hibernate.bean.SiteSamplingHbm" fetch="select">
+            <column name="site_sampling_id" not-null="true" />
+        </many-to-one>
+        <property name="fallingStartTime" type="timestamp">
+            <column name="falling_start_time" length="29" />
+        </property>
+        <property name="fallingEndTime" type="timestamp">
+            <column name="falling_end_time" length="29" />
+        </property>
+        <property name="totalFallHeightCm" type="java.lang.Double">
+            <column name="total_fall_height_cm" precision="17" scale="17" />
+        </property>
+        <property name="risingStartTime" type="timestamp">
+            <column name="rising_start_time" length="29" />
+        </property>
+        <property name="risingEndTime" type="timestamp">
+            <column name="rising_end_time" length="29" />
+        </property>
+        <property name="totalRisingHeightCm" type="java.lang.Double">
+            <column name="total_rising_height_cm" precision="17" scale="17" />
+        </property>
+        <property name="comments" type="string">
+            <column name="comments" length="200" />
+        </property>
+    </class>
+</hibernate-mapping>
