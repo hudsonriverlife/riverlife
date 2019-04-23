@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated Oct 16, 2016 7:26:16 PM by Hibernate Tools 3.4.0.CR1 -->
+<hibernate-mapping>
+    <class name="edu.columbia.riverLife.dal.implementation.hibernate.bean.WindBeaufortHbm" table="wind_beaufort" schema="riverlife">
+        <id name="windBeaufortId" type="int">
+            <column name="wind_beaufort_id" />
+            <generator class="assigned" />
+        </id>
+        <property name="windBeaufort" type="string">
+            <column name="wind_beaufort" length="50" not-null="true" />
+        </property>
+        <set name="physicalMeasurementHbms" table="physical_measurement" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="wind_beaufort_id" />
+            </key>
+            <one-to-many class="edu.columbia.riverLife.dal.implementation.hibernate.bean.PhysicalMeasurementHbm" />
+        </set>
+    </class>
+</hibernate-mapping>

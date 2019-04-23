@@ -1,0 +1,39 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated Oct 16, 2016 7:26:16 PM by Hibernate Tools 3.4.0.CR1 -->
+<hibernate-mapping>
+    <class name="edu.columbia.riverLife.dal.implementation.hibernate.bean.RiverSiteHbm" table="river_site" schema="riverlife">
+        <id name="riverSiteId" type="int">
+            <column name="river_site_id" />
+            <generator class="assigned" />
+        </id>
+        <many-to-one name="riverHbm" class="edu.columbia.riverLife.dal.implementation.hibernate.bean.RiverHbm" fetch="select">
+            <column name="river_id" not-null="true" />
+        </many-to-one>
+        <property name="name" type="string">
+            <column name="name" length="50" not-null="true" />
+        </property>
+        <property name="latitude" type="java.lang.Double">
+            <column name="latitude" precision="17" scale="17" />
+        </property>
+        <property name="longitude" type="java.lang.Double">
+            <column name="longitude" precision="17" scale="17" />
+        </property>
+        <property name="description" type="string">
+            <column name="description" length="500" />
+        </property>
+        <property name="picture" type="binary">
+            <column name="picture" />
+        </property>
+        <property name="riverMile" type="java.lang.Double">
+            <column name="river_mile" precision="17" scale="17" />
+        </property>
+        <set name="siteSamplingHbms" table="site_sampling" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="river_site_id" not-null="true" />
+            </key>
+            <one-to-many class="edu.columbia.riverLife.dal.implementation.hibernate.bean.SiteSamplingHbm" />
+        </set>
+    </class>
+</hibernate-mapping>

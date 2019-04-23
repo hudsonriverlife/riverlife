@@ -1,0 +1,84 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated Oct 16, 2016 7:26:16 PM by Hibernate Tools 3.4.0.CR1 -->
+<hibernate-mapping>
+    <class name="edu.columbia.riverLife.dal.implementation.hibernate.bean.SiteSamplingHbm" table="site_sampling" schema="riverlife">
+        <id name="siteSamplingId" type="int">
+            <column name="site_sampling_id" />
+            <generator class="assigned" />
+        </id>
+        <many-to-one name="riverSiteHbm" class="edu.columbia.riverLife.dal.implementation.hibernate.bean.RiverSiteHbm" fetch="select">
+            <column name="river_site_id" not-null="true" />
+        </many-to-one>
+        <many-to-one name="partnerHbm" class="edu.columbia.riverLife.dal.implementation.hibernate.bean.PartnerHbm" fetch="select">
+            <column name="partner_id" />
+        </many-to-one>
+        <many-to-one name="schoolHbm" class="edu.columbia.riverLife.dal.implementation.hibernate.bean.SchoolHbm" fetch="select">
+            <column name="school_id" not-null="true" />
+        </many-to-one>
+        <property name="samplingTime" type="timestamp">
+            <column name="sampling_time" length="29" not-null="true" />
+        </property>
+        <set name="chemistryHbms" table="chemistry" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="site_sampling_id" not-null="true" />
+            </key>
+            <one-to-many class="edu.columbia.riverLife.dal.implementation.hibernate.bean.ChemistryHbm" />
+        </set>
+        <set name="siteSamplingMacroinvertebrateCountHbms" table="site_sampling_macroinvertebrate_count" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="site_sampling_id" not-null="true" />
+            </key>
+            <one-to-many class="edu.columbia.riverLife.dal.implementation.hibernate.bean.SiteSamplingMacroinvertebrateCountHbm" />
+        </set>
+        <set name="siteSamplingFishCountHbms" table="site_sampling_fish_count" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="site_sampling_id" not-null="true" />
+            </key>
+            <one-to-many class="edu.columbia.riverLife.dal.implementation.hibernate.bean.SiteSamplingFishCountHbm" />
+        </set>
+        <set name="tideObservationHbms" table="tide_observation" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="site_sampling_id" not-null="true" />
+            </key>
+            <one-to-many class="edu.columbia.riverLife.dal.implementation.hibernate.bean.TideObservationHbm" />
+        </set>
+        <set name="physicalMeasurementHbms" table="physical_measurement" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="site_sampling_id" not-null="true" />
+            </key>
+            <one-to-many class="edu.columbia.riverLife.dal.implementation.hibernate.bean.PhysicalMeasurementHbm" />
+        </set>
+        <set name="turbidityHbms" table="turbidity" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="site_sampling_id" not-null="true" />
+            </key>
+            <one-to-many class="edu.columbia.riverLife.dal.implementation.hibernate.bean.TurbidityHbm" />
+        </set>
+        <set name="currentObservationHbms" table="current_observation" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="site_sampling_id" not-null="true" />
+            </key>
+            <one-to-many class="edu.columbia.riverLife.dal.implementation.hibernate.bean.CurrentObservationHbm" />
+        </set>
+        <set name="studentSalinityHbms" table="student_salinity" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="site_sampling_id" not-null="true" />
+            </key>
+            <one-to-many class="edu.columbia.riverLife.dal.implementation.hibernate.bean.StudentSalinityHbm" />
+        </set>
+        <set name="schoolSiteSamplingHbms" table="school_site_sampling" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="site_sampling_id" not-null="true" />
+            </key>
+            <one-to-many class="edu.columbia.riverLife.dal.implementation.hibernate.bean.SchoolSiteSamplingHbm" />
+        </set>
+        <set name="standardizedSalinityHbms" table="standardized_salinity" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="site_sampling_id" not-null="true" />
+            </key>
+            <one-to-many class="edu.columbia.riverLife.dal.implementation.hibernate.bean.StandardizedSalinityHbm" />
+        </set>
+    </class>
+</hibernate-mapping>

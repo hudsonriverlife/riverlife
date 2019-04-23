@@ -1,0 +1,49 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated Oct 16, 2016 7:26:16 PM by Hibernate Tools 3.4.0.CR1 -->
+<hibernate-mapping>
+    <class name="edu.columbia.riverLife.dal.implementation.hibernate.bean.PhysicalMeasurementHbm" table="physical_measurement" schema="riverlife">
+        <id name="physicalMeasurementId" type="int">
+            <column name="physical_measurement_id" />
+            <generator class="assigned" />
+        </id>
+        <many-to-one name="cloudCoverageHbm" class="edu.columbia.riverLife.dal.implementation.hibernate.bean.CloudCoverageHbm" fetch="select">
+            <column name="cloud_coverage_id" />
+        </many-to-one>
+        <many-to-one name="windBeaufortHbm" class="edu.columbia.riverLife.dal.implementation.hibernate.bean.WindBeaufortHbm" fetch="select">
+            <column name="wind_beaufort_id" />
+        </many-to-one>
+        <many-to-one name="directionHbm" class="edu.columbia.riverLife.dal.implementation.hibernate.bean.DirectionHbm" fetch="select">
+            <column name="wind_direction_id" />
+        </many-to-one>
+        <many-to-one name="siteSamplingHbm" class="edu.columbia.riverLife.dal.implementation.hibernate.bean.SiteSamplingHbm" fetch="select">
+            <column name="site_sampling_id" not-null="true" />
+        </many-to-one>
+        <property name="measureTime" type="time">
+            <column name="measure_time" length="15" />
+        </property>
+        <property name="airTemperature" type="java.lang.Double">
+            <column name="air_temperature" precision="17" scale="17">
+                <comment>air temperature in celcius</comment>
+            </column>
+        </property>
+        <property name="weatherToday" type="string">
+            <column name="weather_today" length="100" />
+        </property>
+        <property name="weatherLast3Days" type="string">
+            <column name="weather_last_3_days" length="100" />
+        </property>
+        <property name="windSpeed" type="java.lang.Double">
+            <column name="wind_speed" precision="17" scale="17" />
+        </property>
+        <property name="waterCondition" type="string">
+            <column name="water_condition" length="100" />
+        </property>
+        <property name="waterTemperature" type="java.lang.Double">
+            <column name="water_temperature" precision="17" scale="17">
+                <comment>temperature in celcius</comment>
+            </column>
+        </property>
+    </class>
+</hibernate-mapping>

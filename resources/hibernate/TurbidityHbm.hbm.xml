@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated Oct 16, 2016 7:26:16 PM by Hibernate Tools 3.4.0.CR1 -->
+<hibernate-mapping>
+    <class name="edu.columbia.riverLife.dal.implementation.hibernate.bean.TurbidityHbm" table="turbidity" schema="riverlife">
+        <id name="turbidityId" type="int">
+            <column name="turbidity_id" />
+            <generator class="assigned" />
+        </id>
+        <many-to-one name="siteSamplingHbm" class="edu.columbia.riverLife.dal.implementation.hibernate.bean.SiteSamplingHbm" fetch="select">
+            <column name="site_sampling_id" not-null="true" />
+        </many-to-one>
+        <property name="turbidity" type="java.lang.Double">
+            <column name="turbidity" precision="17" scale="17" />
+        </property>
+        <property name="turbidityMethodId" type="java.lang.Integer">
+            <column name="turbidity_method_id" />
+        </property>
+    </class>
+</hibernate-mapping>

@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated Oct 16, 2016 7:26:16 PM by Hibernate Tools 3.4.0.CR1 -->
+<hibernate-mapping>
+    <class name="edu.columbia.riverLife.dal.implementation.hibernate.bean.FishHbm" table="fish" schema="riverlife">
+        <id name="fishId" type="int">
+            <column name="fish_id" />
+            <generator class="assigned" />
+        </id>
+        <property name="name" type="string">
+            <column name="name" length="30" not-null="true" />
+        </property>
+        <set name="siteSamplingFishCountHbms" table="site_sampling_fish_count" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="fish_id" not-null="true" />
+            </key>
+            <one-to-many class="edu.columbia.riverLife.dal.implementation.hibernate.bean.SiteSamplingFishCountHbm" />
+        </set>
+    </class>
+</hibernate-mapping>

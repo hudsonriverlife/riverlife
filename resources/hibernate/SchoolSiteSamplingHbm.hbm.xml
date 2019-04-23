@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated Oct 16, 2016 7:26:16 PM by Hibernate Tools 3.4.0.CR1 -->
+<hibernate-mapping>
+    <class name="edu.columbia.riverLife.dal.implementation.hibernate.bean.SchoolSiteSamplingHbm" table="school_site_sampling" schema="riverlife">
+        <id name="schoolSiteSamplingId" type="int">
+            <column name="school_site_sampling_id" />
+            <generator class="assigned" />
+        </id>
+        <many-to-one name="schoolHbm" class="edu.columbia.riverLife.dal.implementation.hibernate.bean.SchoolHbm" fetch="select">
+            <column name="school_id" not-null="true" />
+        </many-to-one>
+        <many-to-one name="siteSamplingHbm" class="edu.columbia.riverLife.dal.implementation.hibernate.bean.SiteSamplingHbm" fetch="select">
+            <column name="site_sampling_id" not-null="true" />
+        </many-to-one>
+    </class>
+</hibernate-mapping>

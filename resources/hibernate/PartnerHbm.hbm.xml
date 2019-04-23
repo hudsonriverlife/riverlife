@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated Oct 16, 2016 7:26:16 PM by Hibernate Tools 3.4.0.CR1 -->
+<hibernate-mapping>
+    <class name="edu.columbia.riverLife.dal.implementation.hibernate.bean.PartnerHbm" table="partner" schema="riverlife">
+        <id name="partnerId" type="int">
+            <column name="partner_id" />
+            <generator class="assigned" />
+        </id>
+        <property name="partner" type="string">
+            <column name="partner" length="50" not-null="true" />
+        </property>
+        <set name="siteSamplingHbms" table="site_sampling" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="partner_id" />
+            </key>
+            <one-to-many class="edu.columbia.riverLife.dal.implementation.hibernate.bean.SiteSamplingHbm" />
+        </set>
+    </class>
+</hibernate-mapping>
