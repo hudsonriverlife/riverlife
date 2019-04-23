@@ -1,2 +1,3 @@
 # riverlife
-Web Application to Search Information for A Day in Hudson project
+Web application to search information for A Day in Hudson project.
+http://app.ldeo-grg.org:8080/riverlife/chartsAlongRiver.xhtml
