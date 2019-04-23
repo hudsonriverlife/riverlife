@@ -1,0 +1,45 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated Oct 16, 2016 7:26:16 PM by Hibernate Tools 3.4.0.CR1 -->
+<hibernate-mapping>
+    <class name="edu.columbia.riverLife.dal.implementation.hibernate.bean.ChemistryHbm" table="chemistry" schema="riverlife">
+        <id name="chemistryId" type="int">
+            <column name="chemistry_id" />
+            <generator class="assigned" />
+        </id>
+        <many-to-one name="siteSamplingHbm" class="edu.columbia.riverLife.dal.implementation.hibernate.bean.SiteSamplingHbm" fetch="select">
+            <column name="site_sampling_id" not-null="true" />
+        </many-to-one>
+        <property name="name" type="string">
+            <column name="name" length="50" not-null="true" />
+        </property>
+        <property name="sampleTime" type="time">
+            <column name="sample_time" length="15" />
+        </property>
+        <property name="doPpm" type="java.lang.Double">
+            <column name="do_ppm" precision="17" scale="17" />
+        </property>
+        <property name="waterTemperature" type="java.lang.Double">
+            <column name="water_temperature" precision="17" scale="17" />
+        </property>
+        <property name="saturationPercentage" type="java.lang.Integer">
+            <column name="saturation_percentage" />
+        </property>
+        <property name="ph" type="java.lang.Double">
+            <column name="ph" precision="17" scale="17" />
+        </property>
+        <property name="nitratesPpm" type="java.lang.Double">
+            <column name="nitrates_ppm" precision="17" scale="17" />
+        </property>
+        <property name="phosphatesPpm" type="java.lang.Double">
+            <column name="phosphates_ppm" precision="17" scale="17" />
+        </property>
+        <property name="alkalinityPpm" type="java.lang.Double">
+            <column name="alkalinity_ppm" precision="17" scale="17" />
+        </property>
+        <property name="notes" type="string">
+            <column name="notes" length="100" />
+        </property>
+    </class>
+</hibernate-mapping>

@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated Oct 16, 2016 7:26:16 PM by Hibernate Tools 3.4.0.CR1 -->
+<hibernate-mapping>
+    <class name="edu.columbia.riverLife.dal.implementation.hibernate.bean.DirectionHbm" table="direction" schema="riverlife">
+        <id name="directionId" type="int">
+            <column name="direction_id" />
+            <generator class="assigned" />
+        </id>
+        <property name="direction" type="string">
+            <column name="direction" length="10" not-null="true" />
+        </property>
+        <set name="physicalMeasurementHbms" table="physical_measurement" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="wind_direction_id" />
+            </key>
+            <one-to-many class="edu.columbia.riverLife.dal.implementation.hibernate.bean.PhysicalMeasurementHbm" />
+        </set>
+        <set name="currentObservationHbms" table="current_observation" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="direction_id" not-null="true" />
+            </key>
+            <one-to-many class="edu.columbia.riverLife.dal.implementation.hibernate.bean.CurrentObservationHbm" />
+        </set>
+    </class>
+</hibernate-mapping>

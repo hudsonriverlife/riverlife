@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:f="http://java.sun.com/jsf/core">
+<f:view contentType="text/html">
+	<h:head>
+		<f:facet name="first">
+			<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+			<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+			<meta name="viewport"
+				content="user-scalable=no, width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+			<meta name="apple-mobile-web-app-capable" content="yes" />
+			<link rel="shortcut icon" type="image/png"
+				href="#{request.contextPath}/resources/images/favicon.png" />
+		</f:facet>
+		<title>River Life</title>
+		<h:outputStylesheet name="main/css/showcase.css" />
+		<h:outputStylesheet name="main/css/sh.css" />
+	
+
+
+</h:head>
+
+    <body>
+    
+    <p:messages id="messages" showDetail="false" autoUpdate="true" closable="true" />
+       
+         <h:form id="chartForm">
+       <p:chart id ="chart" widgetVar="chartVar" type="line" model="#{chartsAlongRiverBean.lineModel}"  style="width:800px;height:300px" />
+       <p:commandButton type="button" value="Reset" icon="ui-icon-cancel" onclick="PF('chartVar').resetZoom()"/>
+       
+       <p:commandButton type="button" value="Export" icon="ui-icon-extlink" onclick="exportChart()"/>
+ 
+<p:dialog widgetVar="dlg" showEffect="fade" modal="true" header="Chart as an Image" resizable="false">
+    <p:outputPanel id="output" layout="block" style="width:500px;height:300px"/>
+</p:dialog>
+<script type="text/javascript">
+function exportChart() {
+    //export image
+    $('#chartForm\\:output').empty().append(PF('chartVar').exportAsImage());
+ 
+    //show the dialog
+    PF('dlg').show();
+}
+</script>
+
+	</h:form>
+    </body>
+    </f:view>
+
+
+</html>

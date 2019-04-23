@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:f="http://java.sun.com/jsf/core">
+<f:view contentType="text/html">
+	<h:head>
+		<f:facet name="first">
+			<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+			<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+			<meta name="viewport"
+				content="user-scalable=no, width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+			<meta name="apple-mobile-web-app-capable" content="yes" />
+			<link rel="shortcut icon" type="image/png"
+				href="#{request.contextPath}/resources/images/favicon.png" />
+		</f:facet>
+		<title>River Life</title>
+		<h:outputStylesheet name="main/css/showcase.css" />
+		<h:outputStylesheet name="main/css/sh.css" />
+	
+<script type="text/javascript">
+function exportChart() {
+    //export image
+    $('#output').empty().append(PF('chart').exportAsImage());
+ 
+    //show the dialog
+    PF('dlg').show();
+}
+</script>
+</h:head>
+
+    <body>
+        <h:form id="fishCountsForm">
+        <h:panelGrid columns="2" style="margin-bottom:10px" cellpadding="5">
+	        <p:outputLabel for="riverSite" value="River Site:" />
+	    	<p:selectOneMenu id="riverSite" value="#{siteSamplingBean.selectedRiverSite}">
+	            <f:selectItem itemLabel="Select One" itemValue="" />
+	            <f:selectItems value="#{siteSamplingBean.riverSites}" />
+	        </p:selectOneMenu>  
+	        <p:outputLabel for="fish1" value="First Kind Of Fish:" /> 
+	        <p:selectOneMenu id="fish1" value="#{siteSamplingBean.selectedFish1}">
+	            <f:selectItem itemLabel="Select One" itemValue="" />
+	            <f:selectItems value="#{siteSamplingBean.fishes}" />
+	        </p:selectOneMenu>
+	        <p:outputLabel for="fish2" value="Second Kind of Fish:" /> 
+	        <p:selectOneMenu id="fish2" value="#{siteSamplingBean.selectedFish2}">
+	            <f:selectItem itemLabel="Select One" itemValue="" />
+	            <f:selectItems value="#{siteSamplingBean.fishes}" />
+	        </p:selectOneMenu>
+    	</h:panelGrid>
+    	<p:commandButton value="Submit" actionListener="#{siteSamplingBean.doSubmit}" update="chart" icon="ui-icon-check" />  	
+ 
+       
+       <p:chart id ="chart" widgetVar="chart" type="line" model="#{siteSamplingBean.lineModel}" style="width:800px;height:300px" />
+       
+       <!--  
+       <p:commandButton type="button" value="Export" icon="ui-icon-extlink" onclick="exportChart()"/>
+ 
+<p:dialog widgetVar="dlg" showEffect="fade" modal="true" header="Chart as an Image" resizable="false">
+    <p:outputPanel id="output" layout="block" style="width:500px;height:300px"/>
+</p:dialog>
+ -->
+
+        </h:form>
+    </body>
+    </f:view>
+
+
+</html>
