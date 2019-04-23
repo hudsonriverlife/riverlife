@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:f="http://java.sun.com/jsf/core">
+<f:view contentType="text/html">
+	<h:head>
+		<f:facet name="first">
+			<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+			<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+			<meta name="viewport"
+				content="user-scalable=no, width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+			<meta name="apple-mobile-web-app-capable" content="yes" />
+			<link rel="shortcut icon" type="image/png"
+				href="#{request.contextPath}/resources/images/favicon.png" />
+		</f:facet>
+		<title>River Life</title>
+		<h:outputStylesheet name="main/css/showcase.css" />
+		<h:outputStylesheet name="main/css/sh.css" />
+	
+<script type="text/javascript">
+function exportChart() {
+    //export image
+    $('#chartForm\\:output').empty().append(PF('chart').exportAsImage());
+ 
+    //show the dialog
+    PF('dlg').show();
+}
+
+
+</script>
+</h:head>
+
+    <body>
+    <p:messages id="messages" showDetail="false" autoUpdate="true" closable="true" />
+        <h:form id="chartForm">
+       
+        <h:panelGrid columns="3" style="margin-bottom:10px" cellpadding="5">
+	        <p:outputLabel for="riverMenu" value="Rivers:" />
+	    	<p:selectOneMenu id="riverMenu" value="#{chartsAlongRiverBean.selectedRiver}" required="true">
+	            <f:selectItem itemLabel="Select One" itemValue="" />
+	            <f:selectItems value="#{chartsAlongRiverBean.rivers}" />
+	        </p:selectOneMenu>
+	        <h:outputText value=" " />
+	        
+	        <p:outputLabel for="firstParamGroupMenu" value="First Parameter:" />
+	    	<p:selectOneMenu id="firstParamGroupMenu" value="#{chartsAlongRiverBean.firstSelectedParamGroup}">
+	    		<p:ajax event="valueChange"  update="firstParamMenu" />
+	            <f:selectItem itemLabel="Select One" itemValue="" />
+	            <f:selectItems value="#{chartsAlongRiverBean.paramGroups}" />
+	        </p:selectOneMenu> 
+	        <p:selectOneMenu id="firstParamMenu" value="#{chartsAlongRiverBean.firstSelectedParam}">
+	            <f:selectItem itemLabel="Select One" itemValue="" />
+	            <f:selectItems value="#{chartsAlongRiverBean.firstParamList}" />
+	        </p:selectOneMenu>   
+	        
+	        <p:outputLabel for="secondParamGroupMenu" value="Second Parameter:" />
+	    	<p:selectOneMenu id="secondParamGroupMenu" value="#{chartsAlongRiverBean.secondSelectedParamGroup}">
+	    		<p:ajax event="valueChange"  update="secondParamMenu" />
+	            <f:selectItem itemLabel="Select One" itemValue="" />
+	            <f:selectItems value="#{chartsAlongRiverBean.paramGroups}" />
+	        </p:selectOneMenu> 
+	        <p:selectOneMenu id="secondParamMenu" value="#{chartsAlongRiverBean.secondSelectedParam}">
+	            <f:selectItem itemLabel="Select One" itemValue="" />
+	            <f:selectItems value="#{chartsAlongRiverBean.secondParamList}" />
+	        </p:selectOneMenu>   
+	       
+	        <p:outputLabel for="yearMenu" value="Year:" />
+        	<p:selectOneMenu id="yearMenu" value="#{chartsAlongRiverBean.selectedYear}" style="width:125px" required="true">
+            	<f:selectItem itemLabel="Select One" itemValue="" />
+            	<f:selectItem itemLabel="2003" itemValue="2003" />
+            	<f:selectItem itemLabel="2004" itemValue="2004" />
+            	<f:selectItem itemLabel="2005" itemValue="2005" />
+            	<f:selectItem itemLabel="2006" itemValue="2006" />
+            	<f:selectItem itemLabel="2007" itemValue="2007" />
+            	<f:selectItem itemLabel="2008" itemValue="2008" />
+            	<f:selectItem itemLabel="2009" itemValue="2009" />
+            	<f:selectItem itemLabel="2010" itemValue="2010" />
+            	<f:selectItem itemLabel="2011" itemValue="2011" />
+            	<f:selectItem itemLabel="2012" itemValue="2012" />
+            	<f:selectItem itemLabel="2013" itemValue="2013" />
+            	<f:selectItem itemLabel="2014" itemValue="2014" />
+            	<f:selectItem itemLabel="2015" itemValue="2015" />
+            	<f:selectItem itemLabel="2016" itemValue="2016" />
+            	<f:selectItem itemLabel="2017" itemValue="2017" />
+            	<f:selectItem itemLabel="2018" itemValue="2018" />
+        	</p:selectOneMenu>
+        
+    	</h:panelGrid>
+    	
+    	<p:commandButton value="Submit" actionListener="#{chartsAlongRiverBean.doSubmit}" update="chart" icon="ui-icon-check" />  	
+ 
+       <br />
+       <br />
+       
+       <p:chart id ="chart" widgetVar="chart" type="line" model="#{chartsAlongRiverBean.lineModel}"  style="width:800px;height:400px" />
+       <p:commandButton type="button" value="Reset" icon="ui-icon-cancel" onclick="PF('chart').resetZoom()"/>
+       
+       <p:commandButton type="button" value="Export" icon="ui-icon-extlink" onclick="exportChart()"/>
+ 
+<p:dialog widgetVar="dlg" showEffect="fade" modal="true" header="Chart as an Image" resizable="false">
+    <p:outputPanel id="output" layout="block" style="width:500px;height:300px"/>
+</p:dialog>
+
+        </h:form>
+    </body>
+    </f:view>
+
+
+</html>
