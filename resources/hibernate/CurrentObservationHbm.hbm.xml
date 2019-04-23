@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated Oct 16, 2016 7:26:16 PM by Hibernate Tools 3.4.0.CR1 -->
+<hibernate-mapping>
+    <class name="edu.columbia.riverLife.dal.implementation.hibernate.bean.CurrentObservationHbm" table="current_observation" schema="riverlife">
+        <id name="currentObservationId" type="int">
+            <column name="current_observation_id" />
+            <generator class="assigned" />
+        </id>
+        <many-to-one name="directionHbm" class="edu.columbia.riverLife.dal.implementation.hibernate.bean.DirectionHbm" fetch="select">
+            <column name="direction_id" not-null="true" />
+        </many-to-one>
+        <many-to-one name="currentTypeHbm" class="edu.columbia.riverLife.dal.implementation.hibernate.bean.CurrentTypeHbm" fetch="select">
+            <column name="current_type_id" not-null="true" />
+        </many-to-one>
+        <many-to-one name="siteSamplingHbm" class="edu.columbia.riverLife.dal.implementation.hibernate.bean.SiteSamplingHbm" fetch="select">
+            <column name="site_sampling_id" not-null="true" />
+        </many-to-one>
+        <property name="observationTime" type="timestamp">
+            <column name="observation_time" length="29" not-null="true" />
+        </property>
+        <property name="currentSpeedCmPs" type="java.lang.Double">
+            <column name="current_speed_cm_ps" precision="17" scale="17" />
+        </property>
+    </class>
+</hibernate-mapping>

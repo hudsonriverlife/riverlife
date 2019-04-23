@@ -1,0 +1,262 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated Mar 16, 2012 4:01:23 PM by Hibernate Tools 3.1.0.beta4 -->
+<hibernate-mapping>
+    <sql-query name="edu.columbia.riverlife.dal.getFishCounts">
+        <![CDATA[
+           select ssfc.amount, f.fish_id, ss.sampling_time, rs.river_site_id rs_id, rs.river_mile from riverlife.site_sampling_fish_count 
+           ssfc, riverlife.fish f, riverlife.site_sampling ss, riverlife.river_site rs
+           where ssfc.site_sampling_id = ss.site_sampling_id and ssfc.fish_id = f.fish_id
+           and ss.river_site_id = rs.river_site_id and ssfc.amount > 0
+        ]]>
+    </sql-query>
+    <sql-query name="edu.columbia.riverlife.dal.getFishCountsOverTime">
+        <![CDATA[
+           select ssfc.amount, ss.sampling_time, rs.river_mile from riverlife.site_sampling_fish_count 
+           ssfc, riverlife.fish f, riverlife.site_sampling ss, riverlife.river_site rs
+           where ssfc.site_sampling_id = ss.site_sampling_id and ssfc.fish_id = f.fish_id
+           and ss.river_site_id = rs.river_site_id and f.fish_id = :fishId and 
+           rs.river_site_id = :riverSiteId and ssfc.amount > 0
+        ]]>
+    </sql-query>
+     <sql-query name="edu.columbia.riverlife.dal.getFishCountsAlongRiver">
+        <![CDATA[
+           select ssfc.amount, ss.sampling_time, rs.river_mile from riverlife.site_sampling_fish_count 
+           ssfc, riverlife.fish f, riverlife.site_sampling ss, riverlife.river_site rs, riverlife.river r
+           where ssfc.site_sampling_id = ss.site_sampling_id and ssfc.fish_id = f.fish_id
+           and ss.river_site_id = rs.river_site_id and f.fish_id = :fishId and ssfc.amount > 0
+            and 
+           rs.river_id = r.river_id and r.river_id = :riverId and 
+           extract(year from ss.sampling_time) = :year order by rs.river_mile
+        ]]>
+    </sql-query>
+    
+        <sql-query name="edu.columbia.riverlife.dal.getMacroCountsOverTime">
+        <![CDATA[
+           select ssfc.amount, ss.sampling_time, rs.river_mile from riverlife.site_sampling_macroinvertebrate_count 
+           ssfc, riverlife.macroinvertebrate f, riverlife.site_sampling ss, riverlife.river_site rs
+           where ssfc.site_sampling_id = ss.site_sampling_id and ssfc.macroinvertebrate_id = f.macroinvertebrate_id
+           and ss.river_site_id = rs.river_site_id and f.macroinvertebrate_id = :macroId and 
+           rs.river_site_id = :riverSiteId and ssfc.amount > 0
+        ]]>
+    </sql-query>
+     <sql-query name="edu.columbia.riverlife.dal.getMacroCountsAlongRiver">
+        <![CDATA[
+           select ssfc.amount, ss.sampling_time, rs.river_mile from riverlife.site_sampling_macroinvertebrate_count 
+           ssfc, riverlife.macroinvertebrate f, riverlife.site_sampling ss, riverlife.river_site rs, riverlife.river r
+           where ssfc.site_sampling_id = ss.site_sampling_id and ssfc.macroinvertebrate_id = f.macroinvertebrate_id
+           and ss.river_site_id = rs.river_site_id and f.macroinvertebrate_id = :macroId and 
+           rs.river_id = r.river_id and r.river_id = :riverId and ssfc.amount > 0 and 
+           extract(year from ss.sampling_time) = :year order by rs.river_mile
+        ]]>
+    </sql-query>
+    
+    <sql-query name="edu.columbia.riverlife.dal.getStudentSalinityOverTime">
+        <![CDATA[
+           select ssa.total_salinity_ppm amount, ss.sampling_time, rs.river_mile from riverlife.student_salinity ssa,
+           riverlife.site_sampling ss, riverlife.river_site rs
+           where ssa.site_sampling_id = ss.site_sampling_id 
+           and ss.river_site_id = rs.river_site_id and rs.river_site_id = :riverSiteId
+        ]]>
+    </sql-query>
+    <sql-query name="edu.columbia.riverlife.dal.getStudentSalinityAlongRiver">
+        <![CDATA[
+           select ssa.total_salinity_ppm amount, ss.sampling_time, rs.river_mile from riverlife.student_salinity ssa,
+           riverlife.site_sampling ss, riverlife.river_site rs, riverlife.river r
+           where ssa.site_sampling_id = ss.site_sampling_id 
+           and ss.river_site_id = rs.river_site_id and
+           rs.river_id = r.river_id and r.river_id = :riverId and 
+           extract(year from ss.sampling_time) = :year order by rs.river_mile
+        ]]>
+    </sql-query>
+     <sql-query name="edu.columbia.riverlife.dal.getStandardizedSalinityOverTime">
+        <![CDATA[
+           select ssa.total_salinity_ppm amount, ss.sampling_time, rs.river_mile from riverlife.standardized_salinity ssa,
+           riverlife.site_sampling ss, riverlife.river_site rs
+           where ssa.site_sampling_id = ss.site_sampling_id 
+           and ss.river_site_id = rs.river_site_id and rs.river_site_id = :riverSiteId
+        ]]>
+    </sql-query>
+    
+    <sql-query name="edu.columbia.riverlife.dal.getStandardizedSalinityAlongRiver">
+        <![CDATA[
+           select ssa.total_salinity_ppm amount, ss.sampling_time, rs.river_mile from riverlife.standardized_salinity ssa,
+           riverlife.site_sampling ss, riverlife.river_site rs, riverlife.river r
+           where ssa.site_sampling_id = ss.site_sampling_id 
+           and ss.river_site_id = rs.river_site_id and 
+           rs.river_id = r.river_id and r.river_id = :riverId and 
+           extract(year from ss.sampling_time) = :year order by rs.river_mile
+        ]]>
+    </sql-query>
+    
+    <sql-query name="edu.columbia.riverlife.dal.getTurbidityOverTime">
+        <![CDATA[
+           select ssa.turbidity amount, ss.sampling_time, rs.river_mile from riverlife.turbidity ssa,
+           riverlife.site_sampling ss, riverlife.river_site rs
+           where ssa.site_sampling_id = ss.site_sampling_id 
+           and ss.river_site_id = rs.river_site_id and rs.river_site_id = :riverSiteId
+        ]]>
+    </sql-query>
+    <sql-query name="edu.columbia.riverlife.dal.getTurbidityAlongRiver">
+        <![CDATA[
+           select ssa.turbidity amount, ss.sampling_time, rs.river_mile from riverlife.turbidity ssa,
+           riverlife.site_sampling ss, riverlife.river_site rs, riverlife.river r
+           where ssa.site_sampling_id = ss.site_sampling_id 
+           and ss.river_site_id = rs.river_site_id and 
+           rs.river_id = r.river_id and r.river_id = :riverId and 
+           extract(year from ss.sampling_time) = :year order by rs.river_mile
+        ]]>
+    </sql-query>
+    
+    <sql-query name="edu.columbia.riverlife.dal.getWaterTempOverTime">
+        <![CDATA[
+           select ssa.water_temperature amount, ss.sampling_time, rs.river_mile from riverlife.chemistry ssa,
+           riverlife.site_sampling ss, riverlife.river_site rs
+           where ssa.site_sampling_id = ss.site_sampling_id 
+           and ss.river_site_id = rs.river_site_id and rs.river_site_id = :riverSiteId
+        ]]>
+    </sql-query>
+    <sql-query name="edu.columbia.riverlife.dal.getWaterTempAlongRiver">
+        <![CDATA[
+           select ssa.water_temperature amount, ss.sampling_time, rs.river_mile from riverlife.chemistry ssa,
+           riverlife.site_sampling ss, riverlife.river_site rs, riverlife.river r
+           where ssa.site_sampling_id = ss.site_sampling_id 
+           and ss.river_site_id = rs.river_site_id and 
+           rs.river_id = r.river_id and r.river_id = :riverId and 
+           extract(year from ss.sampling_time) = :year order by rs.river_mile
+        ]]>
+    </sql-query>
+    
+    <sql-query name="edu.columbia.riverlife.dal.getPhOverTime">
+        <![CDATA[
+           select ssa.ph amount, ss.sampling_time, rs.river_mile from riverlife.chemistry ssa,
+           riverlife.site_sampling ss, riverlife.river_site rs
+           where ssa.site_sampling_id = ss.site_sampling_id 
+           and ss.river_site_id = rs.river_site_id and rs.river_site_id = :riverSiteId
+        ]]>
+    </sql-query>
+    <sql-query name="edu.columbia.riverlife.dal.getPhAlongRiver">
+        <![CDATA[
+           select ssa.ph amount, ss.sampling_time, rs.river_mile from riverlife.chemistry ssa,
+           riverlife.site_sampling ss, riverlife.river_site rs, riverlife.river r
+           where ssa.site_sampling_id = ss.site_sampling_id 
+           and ss.river_site_id = rs.river_site_id and 
+           rs.river_id = r.river_id and r.river_id = :riverId and 
+           extract(year from ss.sampling_time) = :year order by rs.river_mile
+        ]]>
+    </sql-query>
+    
+    <sql-query name="edu.columbia.riverlife.dal.getDissolvedOxygenOverTime">
+        <![CDATA[
+           select ssa.do_ppm amount, ss.sampling_time, rs.river_mile from riverlife.chemistry ssa,
+           riverlife.site_sampling ss, riverlife.river_site rs
+           where ssa.site_sampling_id = ss.site_sampling_id 
+           and ss.river_site_id = rs.river_site_id and rs.river_site_id = :riverSiteId
+        ]]>
+    </sql-query>
+    <sql-query name="edu.columbia.riverlife.dal.getDissolvedOxygenAlongRiver">
+        <![CDATA[
+           select ssa.do_ppm amount, ss.sampling_time, rs.river_mile from riverlife.chemistry ssa,
+           riverlife.site_sampling ss, riverlife.river_site rs, riverlife.river r
+           where ssa.site_sampling_id = ss.site_sampling_id 
+           and ss.river_site_id = rs.river_site_id and 
+           rs.river_id = r.river_id and r.river_id = :riverId and 
+           extract(year from ss.sampling_time) = :year order by rs.river_mile
+        ]]>
+    </sql-query>
+    
+    <sql-query name="edu.columbia.riverlife.dal.getOxygenSaturationOverTime">
+        <![CDATA[
+           select ssa.saturation_percentage amount, ss.sampling_time, rs.river_mile from riverlife.chemistry ssa,
+           riverlife.site_sampling ss, riverlife.river_site rs
+           where ssa.site_sampling_id = ss.site_sampling_id 
+           and ss.river_site_id = rs.river_site_id and rs.river_site_id = :riverSiteId
+        ]]>
+    </sql-query>
+    <sql-query name="edu.columbia.riverlife.dal.getOxygenSaturationAlongRiver">
+        <![CDATA[
+           select ssa.saturation_percentage amount, ss.sampling_time, rs.river_mile from riverlife.chemistry ssa,
+           riverlife.site_sampling ss, riverlife.river_site rs, riverlife.river r
+           where ssa.site_sampling_id = ss.site_sampling_id 
+           and ss.river_site_id = rs.river_site_id and 
+           rs.river_id = r.river_id and r.river_id = :riverId and 
+           extract(year from ss.sampling_time) = :year order by rs.river_mile
+        ]]>
+    </sql-query>
+
+    <sql-query name="edu.columbia.riverlife.dal.getCurrentDirectionOverTime">
+        <![CDATA[
+           select d.direction amount, ss.sampling_time, rs.river_mile from riverlife.current_observation co,
+           riverlife.direction d, riverlife.site_sampling ss, riverlife.river_site rs
+           where co.site_sampling_id = ss.site_sampling_id 
+           and co.direction_id = d.direction_id
+           and ss.river_site_id = rs.river_site_id and rs.river_site_id = :riverSiteId
+        ]]>
+    </sql-query>
+    <sql-query name="edu.columbia.riverlife.dal.getCurrentDirectionAlongRiver">
+        <![CDATA[
+           select d.direction amount, ss.sampling_time, rs.river_mile from riverlife.current_observation co,
+           riverlife.direction d, riverlife.site_sampling ss, riverlife.river_site rs, riverlife.river r
+           where co.site_sampling_id = ss.site_sampling_id 
+           and ss.river_site_id = rs.river_site_id and 
+           and co.direction_id = d.direction_id
+           rs.river_id = r.river_id and r.river_id = :riverId and 
+           extract(year from ss.sampling_time) = :year order by rs.river_mile
+        ]]>
+    </sql-query>
+        <sql-query name="edu.columbia.riverlife.dal.getAirTemperatureOverTime">
+        <![CDATA[
+           select pm.air_temperature amount, ss.sampling_time, rs.river_mile from riverlife.physical_measurement pm,
+           riverlife.site_sampling ss, riverlife.river_site rs
+           where pm.site_sampling_id = ss.site_sampling_id 
+           and ss.river_site_id = rs.river_site_id and rs.river_site_id = :riverSiteId
+        ]]>
+    </sql-query>
+    <sql-query name="edu.columbia.riverlife.dal.getAirTemperatureAlongRiver">
+        <![CDATA[
+           select pm.air_temperature amount, ss.sampling_time, rs.river_mile from riverlife.physical_measurement pm,
+           riverlife.site_sampling ss, riverlife.river_site rs, riverlife.river r
+           where pm.site_sampling_id = ss.site_sampling_id 
+           and ss.river_site_id = rs.river_site_id and 
+           rs.river_id = r.river_id and r.river_id = :riverId and 
+           extract(year from ss.sampling_time) = :year order by rs.river_mile
+        ]]>
+    </sql-query>
+    <sql-query name="edu.columbia.riverlife.dal.getWindSpeedOverTime">
+        <![CDATA[
+           select pm.wind_speed amount, ss.sampling_time, rs.river_mile from riverlife.physical_measurement pm,
+           riverlife.site_sampling ss, riverlife.river_site rs
+           where pm.site_sampling_id = ss.site_sampling_id 
+           and ss.river_site_id = rs.river_site_id and rs.river_site_id = :riverSiteId
+        ]]>
+    </sql-query>
+    <sql-query name="edu.columbia.riverlife.dal.getWindSpeedAlongRiver">
+        <![CDATA[
+           select pm.wind_speed amount, ss.sampling_time, rs.river_mile from riverlife.physical_measurement pm,
+           riverlife.site_sampling ss, riverlife.river_site rs, riverlife.river r
+           where pm.site_sampling_id = ss.site_sampling_id 
+           and ss.river_site_id = rs.river_site_id and 
+           rs.river_id = r.river_id and r.river_id = :riverId and 
+           extract(year from ss.sampling_time) = :year order by rs.river_mile
+        ]]>
+    </sql-query>  
+    <sql-query name="edu.columbia.riverlife.dal.getWindDirectionOverTime">
+        <![CDATA[
+           select pm.air_temperature amount, ss.sampling_time, rs.river_mile from riverlife.physical_measurement pm,
+           riverlife.wind_direction dr, riverlife.site_sampling ss, riverlife.river_site rs
+           where pm.site_sampling_id = ss.site_sampling_id 
+           and ss.river_site_id = rs.river_site_id and rs.river_site_id = :riverSiteId
+        ]]>
+    </sql-query>
+    <sql-query name="edu.columbia.riverlife.dal.getWindDirectionAlongRiver">
+        <![CDATA[
+           select pm.air_temperature amount, ss.sampling_time, rs.river_mile from riverlife.physical_measurement pm,
+           riverlife.wind_direction dr, riverlife.site_sampling ss, riverlife.river_site rs, riverlife.river r
+           where pm.site_sampling_id = ss.site_sampling_id 
+           and ss.river_site_id = rs.river_site_id and 
+           rs.river_id = r.river_id and r.river_id = :riverId and 
+           extract(year from ss.sampling_time) = :year order by rs.river_mile
+        ]]>
+    </sql-query>      
+ </hibernate-mapping>

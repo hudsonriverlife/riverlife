@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated Oct 16, 2016 7:26:16 PM by Hibernate Tools 3.4.0.CR1 -->
+<hibernate-mapping>
+    <class name="edu.columbia.riverLife.dal.implementation.hibernate.bean.SiteSamplingMacroinvertebrateCountHbm" table="site_sampling_macroinvertebrate_count" schema="riverlife">
+        <id name="siteSamplingMacroinvertebrateId" type="int">
+            <column name="site_sampling_macroinvertebrate_id" />
+            <generator class="assigned" />
+        </id>
+        <many-to-one name="macroinvertebrateCollectionMethodHbm" class="edu.columbia.riverLife.dal.implementation.hibernate.bean.MacroinvertebrateCollectionMethodHbm"
+        fetch="select">
+            <column name="collection_method_id" not-null="true" />
+        </many-to-one>
+        <many-to-one name="macroinvertebrateHbm" class="edu.columbia.riverLife.dal.implementation.hibernate.bean.MacroinvertebrateHbm" fetch="select">
+            <column name="macroinvertebrate_id" not-null="true" />
+        </many-to-one>
+        <many-to-one name="siteSamplingHbm" class="edu.columbia.riverLife.dal.implementation.hibernate.bean.SiteSamplingHbm" fetch="select">
+            <column name="site_sampling_id" not-null="true" />
+        </many-to-one>
+        <property name="countTime" type="time">
+            <column name="count_time" length="15" />
+        </property>
+        <property name="amount" type="int">
+            <column name="amount" not-null="true" />
+        </property>
+    </class>
+</hibernate-mapping>
