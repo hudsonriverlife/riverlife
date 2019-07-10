@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:f="http://java.sun.com/jsf/core">
+<f:view contentType="text/html">
+	<h:head>
+		<f:facet name="first">
+			<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+			<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+			<meta name="viewport"
+				content="user-scalable=no, width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+			<meta name="apple-mobile-web-app-capable" content="yes" />
+			<link rel="shortcut icon" type="image/png"
+				href="#{request.contextPath}/resources/images/favicon.png" />
+		</f:facet>
+		<title>River Life</title>
+		<h:outputStylesheet name="main/css/showcase.css" />
+		<h:outputStylesheet name="main/css/sh.css" />
+	
+<script type="text/javascript">
+function extLegend() 
+{
+    this.cfg.legend= {
+        show: true,
+        location: 'e',
+        placement: 'outsideGrid'
+    };
+}
+function exportChart() {
+    //export image
+    $('#output').empty().append(PF('chart').exportAsImage());
+ 
+    //show the dialog
+    PF('dlg').show();
+}
+</script>
+<!-- 
+<script type="text/javascript" src="http://maps.google.com/maps/api/js?key=AIzaSyDPYHX140L6ff6b29Dk82ZPyxmfjoY6aPA&amp;sensor=false"></script>
+ -->
+ <script type="text/javascript" src="http://maps.google.com/maps/api/js?key=AIzaSyDjS6zRDQkgkUIuq2hU0gSf8Ean_4QIfJw&amp;sensor=false"></script>
+<script type="text/javascript">
+function exportChart() {
+    //export image
+    $('#chartForm\\:output').empty().append(PF('chart').exportAsImage());
+ 
+    //show the dialog
+    PF('dlg').show();
+}
+</script>
+
+</h:head>
+
+    <body>
+        <h:form id="chartForm">
+    <p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" />
+        <h:panelGrid columns="3" style="margin-bottom:10px" cellpadding="5">
+	        <p:outputLabel for="riverMenu" value="Rivers: *" />
+	    	<p:selectOneMenu id="riverMenu" value="#{chartsOverTimeBean.selectedRiver}">
+	    		<p:ajax event="valueChange"  listener= "#{chartsOverTimeBean.onRiverChange}" update="gmap, riverSite" />
+	            <f:selectItem itemLabel="Select One" itemValue="" />
+	            <f:selectItems value="#{chartsOverTimeBean.rivers}" />
+	        </p:selectOneMenu>
+	        
+	        <h:outputText value=" " />
+	        <p:outputLabel for="siteOrder" value="Site Order:" />
+        	<p:selectOneRadio id="siteOrder" value="#{chartsOverTimeBean.siteOrder}">
+        		<p:ajax event="valueChange"  listener= "#{chartsOverTimeBean.onRiverChange}" update="gmap, riverSite" />
+            	<f:selectItem itemLabel="Alphabetically" itemValue="a" />
+            	<f:selectItem itemLabel="North to South" itemValue="ns" />
+        	</p:selectOneRadio>
+        	<h:outputText value=" " />
+        	
+	        <p:outputLabel for="riverSite" value="River Site: *" />
+	    	<p:selectOneMenu id="riverSite" value="#{chartsOverTimeBean.selectedRiverSite}">
+	            <f:selectItem itemLabel="Select One" itemValue="" />
+	            <f:selectItems value="#{chartsOverTimeBean.riverSites}" />
+	        </p:selectOneMenu>
+	        <p:commandLink  onclick="PF('gmapDlg').show();">
+	        	<h:outputText value="Select from map" />
+			</p:commandLink>
+	        <p:outputLabel for="firstParamGroupMenu" value="First Parameter:" />
+	    	<p:selectOneMenu id="firstParamGroupMenu" value="#{chartsOverTimeBean.firstSelectedParamGroup}">
+	    		<p:ajax event="valueChange"  update="firstParamMenu" />
+	            <f:selectItem itemLabel="Select One" itemValue="" />
+	            <f:selectItems value="#{chartsOverTimeBean.paramGroups}" />
+	        </p:selectOneMenu> 
+	        <p:selectOneMenu id="firstParamMenu" value="#{chartsOverTimeBean.firstSelectedParam}">
+	            <f:selectItem itemLabel="Select One" itemValue="" />
+	            <f:selectItems value="#{chartsOverTimeBean.firstParamList}" />
+	        </p:selectOneMenu>   
+	        
+	        <p:outputLabel for="secondParamGroupMenu" value="Second Parameter:" />
+	    	<p:selectOneMenu id="secondParamGroupMenu" value="#{chartsOverTimeBean.secondSelectedParamGroup}">
+	    		<p:ajax event="valueChange"  update="secondParamMenu" />
+	            <f:selectItem itemLabel="Select One" itemValue="" />
+	            <f:selectItems value="#{chartsOverTimeBean.paramGroups}" />
+	        </p:selectOneMenu> 
+	        <p:selectOneMenu id="secondParamMenu" value="#{chartsOverTimeBean.secondSelectedParam}">
+	            <f:selectItem itemLabel="Select One" itemValue="" />
+	            <f:selectItems value="#{chartsOverTimeBean.secondParamList}" />
+	        </p:selectOneMenu>   
+	       
+    	</h:panelGrid>
+    	
+            
+        <br/>
+    	<p:commandButton value="Submit" actionListener="#{chartsOverTimeBean.doSubmit}" update="chart" icon="ui-icon-check" />  	
+ 		<br />
+       <p:chart id ="chart" widgetVar="chart" type="line" model="#{chartsOverTimeBean.lineModel}" legendPosition="e" extender="extLegend" style="width:800px;height:400px" />
+    	   <p:commandButton type="button" value="Reset" icon="ui-icon-cancel" onclick="PF('chart').resetZoom()"/>
+           
+       <p:commandButton type="button" value="Export" icon="ui-icon-extlink" onclick="exportChart()"/>
+ 
+<p:dialog widgetVar="dlg" showEffect="fade" modal="true" header="Chart as an Image" resizable="false">
+    <p:outputPanel id="output" layout="block" style="width:500px;height:300px"/>
+</p:dialog>
+		<p:dialog header="Map" widgetVar="gmapDlg" height="500" width="600" modal="true">
+   		<p:gmap id="gmap" center="#{chartsOverTimeBean.lat}, #{chartsOverTimeBean.lon}" zoom="10" type="ROADMAP" 
+    	 	model="#{chartsOverTimeBean.mapModel}" style="width:600px;height:500px">
+    	 	<p:ajax event="overlaySelect" listener="#{chartsOverTimeBean.onMarkerSelect}" update="riverSite,infoWindow"/>
+ 
+        	<p:gmapInfoWindow id="infoWindow">
+        	<h:panelGrid  columns="1" style="display: block; margin: auto;width:360px;">
+            	
+                    <h:outputText value="#{chartsOverTimeBean.marker.title}" style="text-align:center;font-size:18px;font-weight:bold;display: block; margin: auto;width:100%"/>
+ 					<h:graphicImage value="/images/#{chartsOverTimeBean.selectedRiverSiteFromMap.id}.jpg" height="250" width="333"/>
+ 					<p:outputPanel style="text-align: center; display: block; margin: auto; width:100%">
+ 					
+ 					<p:commandButton value="Select" style="text-align:center;" actionListener="#{chartsOverTimeBean.doSelect}" 
+ 						update="riverSite" oncomplete="PF('gmapDlg').hide();"  icon="ui-icon-check" /> 
+ 					</p:outputPanel> 
+                    <h:outputText style="text-align: left;" value="#{chartsOverTimeBean.selectedRiverSiteFromMap.description}" />
+ 					
+ 					
+            </h:panelGrid>
+        </p:gmapInfoWindow>
+            </p:gmap>
+            </p:dialog> 
+        </h:form>
+    </body>
+    </f:view>
+
+
+</html>
