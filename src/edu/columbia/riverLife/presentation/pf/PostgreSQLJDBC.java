@@ -13,13 +13,16 @@ public class PostgreSQLJDBC {
        try {
        Class.forName("org.postgresql.Driver");
          c = DriverManager
-            .getConnection("jdbc:postgresql://sandbox.ldeo-grg.org:5439/hudson",
-            "bsun", "dayinthelife!");
+            .getConnection("jdbc:postgresql://localhost:5432/hudson",
+            "xxx", "xxxxxx");
+       
          c.setAutoCommit(false);
          System.out.println("Opened database successfully");
 
          stmt = c.createStatement();
-         ResultSet rs = stmt.executeQuery( "SELECT site_sampling_id FROM \"schemaA\".site_sampling;" );
+        // ResultSet rs = stmt.executeQuery( "SELECT site_sampling_id FROM riverlife.site_sampling;" );
+         ResultSet rs = stmt.executeQuery( "select student_salinity_id as site_sampling_id from riverlife.student_salinity;" );
+         
          while ( rs.next() ) {
             int id = rs.getInt("site_sampling_id");
            

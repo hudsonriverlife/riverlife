@@ -21,7 +21,7 @@
             <column name="longitude" precision="17" scale="17" />
         </property>
         <property name="description" type="string">
-            <column name="description" length="500" />
+            <column name="description" length="1000" />
         </property>
         <property name="picture" type="binary">
             <column name="picture" />

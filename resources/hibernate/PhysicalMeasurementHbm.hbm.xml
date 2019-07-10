@@ -32,7 +32,7 @@
             <column name="weather_today" length="100" />
         </property>
         <property name="weatherLast3Days" type="string">
-            <column name="weather_last_3_days" length="100" />
+            <column name="weather_last_3_days" length="1024" />
         </property>
         <property name="windSpeed" type="java.lang.Double">
             <column name="wind_speed" precision="17" scale="17" />

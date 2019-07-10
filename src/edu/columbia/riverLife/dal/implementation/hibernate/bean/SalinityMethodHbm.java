@@ -10,6 +10,10 @@ import java.util.Set;
  */
 public class SalinityMethodHbm implements java.io.Serializable {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private int salinityMethodId;
 	private String method;
 	private Set studentSalinityHbms = new HashSet(0);

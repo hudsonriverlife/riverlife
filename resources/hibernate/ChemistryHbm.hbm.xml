@@ -12,7 +12,7 @@
             <column name="site_sampling_id" not-null="true" />
         </many-to-one>
         <property name="name" type="string">
-            <column name="name" length="50" not-null="true" />
+            <column name="name" length="256" not-null="true" />
         </property>
         <property name="sampleTime" type="time">
             <column name="sample_time" length="15" />
@@ -39,7 +39,7 @@
             <column name="alkalinity_ppm" precision="17" scale="17" />
         </property>
         <property name="notes" type="string">
-            <column name="notes" length="100" />
+            <column name="notes" length="200" />
         </property>
     </class>
 </hibernate-mapping>

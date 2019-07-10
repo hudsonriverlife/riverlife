@@ -11,6 +11,10 @@ import java.util.Set;
  */
 public class SiteSamplingHbm implements java.io.Serializable {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private int siteSamplingId;
 	private RiverSiteHbm riverSiteHbm;
 	private PartnerHbm partnerHbm;
