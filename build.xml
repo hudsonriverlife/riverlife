@@ -121,7 +121,7 @@
 	<!-- ==================================================== -->
 	    <target name="deploy" depends="clean, war">
 	        <echo message="deploying war file to tomcat"/>
-                <copy todir="${catalina.home}/webapps" file="${dist.dir}/${ant.project.name}.war"/> 
+	        <copy todir="${catalina.home}/webapps" file="${dist.dir}/${ant.project.name}.war"/> 
 	    </target>
     
 <!-- ==================================================== -->
