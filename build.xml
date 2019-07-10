@@ -12,6 +12,7 @@
     <property name="dist.dir" value="dist"/>
     <property name="webapp.dir" value="WebContent"/>
     <property name="resources.dir" value="resources"/>
+    <property name="catalina.dir" value="/opt/apache-tomcat-8.5.42"/>
 
     <!-- define useful filesets -->
     <fileset id="required.jars" dir="${lib.dir}">
@@ -66,7 +67,7 @@
         <echo message="compiling java source code"/>
 
         <mkdir dir="${classes.dir}"/>
-        <javac srcdir="${src.dir}"
+        <javac target="1.7" source="1.7" srcdir="${src.dir}"
                 destdir="${classes.dir}"
                 debug="on"
                 deprecation="on"
@@ -120,7 +121,7 @@
 	<!-- ==================================================== -->
 	    <target name="deploy" depends="clean, war">
 	        <echo message="deploying war file to tomcat"/>
-	        <copy todir="${catalina.home}/webapps" file="${dist.dir}/${ant.project.name}.war"/> 
+                <copy todir="${catalina.home}/webapps" file="${dist.dir}/${ant.project.name}.war"/> 
 	    </target>
     
 <!-- ==================================================== -->
