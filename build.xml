@@ -12,8 +12,11 @@
     <property name="dist.dir" value="dist"/>
     <property name="webapp.dir" value="WebContent"/>
     <property name="resources.dir" value="resources"/>
-    <property name="catalina.dir" value="/opt/apache-tomcat-8.5.42"/>
-
+    <!--
+	<property name="catalina.dir" value="/Users/song/Documents/apache-tomcat-8.5.42"/>
+    -->
+	<property name="catalina.dir" value="/Users/song/Documents/apache-tomcat-7.0.23"/>
+	    
     <!-- define useful filesets -->
     <fileset id="required.jars" dir="${lib.dir}">
         <include name="*.jar"/>
@@ -22,6 +25,10 @@
     <!-- for classpath -->
     <path id="classpath">
         <fileset dir="${lib.dir}" includes="**/*.jar"/>
+    </path>
+	
+    <path id="tomcatlib.path">
+        <fileset dir="${catalina.dir}/lib" includes="*.jar"/>
     </path>
 
 <!-- ===== EXECUTABLE TARGETS ============================================== -->
@@ -67,16 +74,19 @@
         <echo message="compiling java source code"/>
 
         <mkdir dir="${classes.dir}"/>
-        <javac target="1.7" source="1.7" srcdir="${src.dir}"
+
+        <javac target="1.7" source="1.7" srcdir="${src.dir}" 
                 destdir="${classes.dir}"
                 debug="on"
                 deprecation="on"
-                optimize="on">
+                optimize="on"
+        	     >
             <classpath>
                 <pathelement location="${servlet.jar}"/>
                 <pathelement location="${jsp.jar}"/>
                 <fileset refid="required.jars"/>
             </classpath>
+        	<classpath refid="tomcatlib.path" />
             <compilerarg value="-Xlint"/>
             <compilerarg value="-Xlint:-serial"/>
         </javac>
@@ -88,7 +98,7 @@
     <target name="war" depends="compile" description="create web application archive">
         <echo message="creating WAR file" />
         <mkdir dir="${dist.dir}"/>
-        <jar jarfile="${dist.dir}/${ant.project.name}.war" basedir="${build.dir}"/>
+        <jar jarfile="${dist.dir}/${ant.project.name}-v3.war" basedir="${build.dir}"/>
     </target>
     
 	<target name="client.jar" depends="compile">
@@ -121,7 +131,11 @@
 	<!-- ==================================================== -->
 	    <target name="deploy" depends="clean, war">
 	        <echo message="deploying war file to tomcat"/>
-	        <copy todir="${catalina.home}/webapps" file="${dist.dir}/${ant.project.name}.war"/> 
+	        <!--
+	    	<copy todir="/Users/song/Documents/apache-tomcat-8.5.42/webapps" file="${dist.dir}/${ant.project.name}-v2.war"/> 
+	    	-->
+	    	<copy todir="/Users/song/Documents/apache-tomcat-7.0.23/webapps" file="${dist.dir}/${ant.project.name}-v3.war"/> 
+	    		    
 	    </target>
     
 <!-- ==================================================== -->
