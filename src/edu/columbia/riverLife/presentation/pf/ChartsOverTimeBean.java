@@ -73,6 +73,7 @@ public class ChartsOverTimeBean extends ChartsBean {
 		series.set("2017", null);
 		series.set("2018", null);
 		series.set("2019", null);
+		series.set("2020", null);
 		lineModel.addSeries(series);
 	}
 
