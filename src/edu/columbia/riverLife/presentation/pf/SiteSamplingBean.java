@@ -67,6 +67,8 @@ public class SiteSamplingBean {
         series.set("2018", null);
         series.set("2019", null);
         series.set("2020", null);
+        series.set("2021", null);
+		series.set("2022", null);
         this.lineModel.addSeries(series);
 	}
 
