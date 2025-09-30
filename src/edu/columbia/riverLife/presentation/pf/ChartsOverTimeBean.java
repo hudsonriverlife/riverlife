@@ -5,6 +5,8 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
+import java.util.HashMap;
 
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
@@ -239,23 +241,25 @@ public class ChartsOverTimeBean extends ChartsBean {
 		return false;
 	}
 	
-	 protected LineChartSeries buildLineSeries(List<SamplingData> samplingDatas, String name ) {
-		 
-		 addAdditionalPlottingSpots(samplingDatas);
+	protected LineChartSeries buildLineSeries(List<SamplingData> samplingDatas, String name) {
+		LineChartSeries series = new LineChartSeries();
+		series.setLabel(name);
 
-		  LineChartSeries series = new LineChartSeries();
-	      series.setLabel(name);
-	       double max=0; 
-		  for (SamplingData fcd: samplingDatas) {
-			 Double data=fcd.getData();
-			 if (data != null && data > max)
-				 max = data;
-			 series.set(fcd.getYear().toString(), data);
-		 }
-		 
-		 return series;
-		 
-	 }
+		// Build a lookup for existing data
+		Map<Integer, Double> yearToData = new HashMap<>();
+		for (SamplingData fcd : samplingDatas) {
+			yearToData.put(fcd.getYear(), fcd.getData());
+		}
+
+		// Force the same year range for ALL series
+		for (int year = 2003; year <= 2024; year++) {
+			Double data = yearToData.get(year); // null if missing
+			series.set(Integer.toString(year), data);
+		}
+
+		return series;
+	}
+
 
 	 private void setAxies(LineChartSeries series1, LineChartSeries series2, double max1, double max2) {
 			
