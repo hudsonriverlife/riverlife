@@ -114,28 +114,38 @@ public class ChartsAlongRiverBean extends ChartsBean{
 	}
 	
 	private void addToCombinedList(Double d, List<Double> list) {
-		for (Double dd: list) {
-			if (this.sameDouble(d, dd))
-				return;
+		if (d == null || list == null) return;
+		for (Double dd : list) {
+			if (dd != null && sameDouble(d, dd)) return;
 		}
 		list.add(d);
 	}
 	
 	private List<Double> getCombinedRiverMiles(List<SamplingData> series1, List<SamplingData> series2) {
-		List<Double> combinedPlots=new ArrayList<Double> ();
+		List<Double> combinedPlots = new ArrayList<>();
+
 		if (series1 != null) {
-			for (SamplingData sd: series1) {
-				this.addToCombinedList(sd.getRiverMile(), combinedPlots);
+			for (SamplingData sd : series1) {
+				Double mile = sd.getRiverMile();
+				if (mile != null) {
+					addToCombinedList(mile, combinedPlots);
+				}
 			}
 		}
+
 		if (series2 != null) {
-			for (SamplingData sd: series2) {
-				this.addToCombinedList(sd.getRiverMile(), combinedPlots);
+			for (SamplingData sd : series2) {
+				Double mile = sd.getRiverMile();
+				if (mile != null) {
+					addToCombinedList(mile, combinedPlots);
+				}
 			}
 		}
+
 		Collections.sort(combinedPlots);
 		return combinedPlots;
 	}
+
 	
 	private boolean sameDouble(double d1, double d2) {
 		if (Math.abs(d1 - d2) < 0.0001)
