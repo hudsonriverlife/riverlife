@@ -57,29 +57,14 @@ public class ChartsOverTimeBean extends ChartsBean {
 	
 	
 	protected void initLineModel() {
-		lineModel.getAxes().put(AxisType.X, new CategoryAxis("Years"));
-		ChartSeries series = new ChartSeries();
-		series.set("2004", null);
-		series.set("2005", null);
-		series.set("2006", null);
-		series.set("2007", null);
-		series.set("2008", null);
-		series.set("2009", null);
-		series.set("2010", null);
-		series.set("2011", null);
-		series.set("2012", null);
-		series.set("2013", null);
-		series.set("2014", null);
-		series.set("2015", null);
-		series.set("2016", null);
-		series.set("2017", null);
-		series.set("2018", null);
-		series.set("2019", null);
-		series.set("2020", null);
-		series.set("2021", null);
-		series.set("2022", null);
-		series.set("2023", null);
-		series.set("2024", null);
+		lineModel.getAxes().put(AxisType.X, new LinearAxis("Years")); // numeric axis
+		LineChartSeries series = new LineChartSeries();
+		series.setLabel("Placeholder");
+
+		// Use numeric years
+		for (int year = 2003; year <= 2024; year++) {
+			series.set(year, null);
+		}
 		lineModel.addSeries(series);
 	}
 
@@ -245,16 +230,14 @@ public class ChartsOverTimeBean extends ChartsBean {
 		LineChartSeries series = new LineChartSeries();
 		series.setLabel(name);
 
-		// Build a lookup for existing data
 		Map<Integer, Double> yearToData = new HashMap<>();
 		for (SamplingData fcd : samplingDatas) {
-			yearToData.put(fcd.getYear(), fcd.getData());
+			if (fcd.getYear() != null)
+				yearToData.put(fcd.getYear(), fcd.getData());
 		}
 
-		// Force the same year range for ALL series
 		for (int year = 2003; year <= 2024; year++) {
-			Double data = yearToData.get(year); // null if missing
-			series.set(Integer.toString(year), data);
+			series.set(year, yearToData.get(year)); // numeric x-values
 		}
 
 		return series;
