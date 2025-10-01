@@ -57,11 +57,18 @@ public class ChartsOverTimeBean extends ChartsBean {
 	
 	
 	protected void initLineModel() {
-		lineModel.getAxes().put(AxisType.X, new LinearAxis("Years")); // numeric axis
+		LinearAxis xAxis = new LinearAxis("Years");
+		xAxis.setMin(2003);
+		xAxis.setMax(2024);
+		xAxis.setTickInterval("1");   // step = 1 year
+		xAxis.setTickFormat("%.0f");  // format = whole numbers (no decimals)
+
+		lineModel.getAxes().put(AxisType.X, xAxis);
+
 		LineChartSeries series = new LineChartSeries();
 		series.setLabel("Placeholder");
 
-		// Use numeric years
+		// numeric years
 		for (int year = 2003; year <= 2024; year++) {
 			series.set(year, null);
 		}
