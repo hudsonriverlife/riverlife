@@ -198,9 +198,9 @@
         <![CDATA[
            select d.direction amount, ss.sampling_time, rs.river_mile from riverlife.current_observation co,
            riverlife.direction d, riverlife.site_sampling ss, riverlife.river_site rs, riverlife.river r
-           where co.site_sampling_id = ss.site_sampling_id 
-           and ss.river_site_id = rs.river_site_id and 
-           and co.direction_id = d.direction_id
+           where co.site_sampling_id = ss.site_sampling_id and
+           ss.river_site_id = rs.river_site_id and 
+           co.direction_id = d.direction_id and
            rs.river_id = r.river_id and r.river_id = :riverId and 
            extract(year from ss.sampling_time) = :year order by rs.river_mile
         ]]>

@@ -98,7 +98,7 @@
     <target name="war" depends="compile" description="create web application archive">
         <echo message="creating WAR file" />
         <mkdir dir="${dist.dir}"/>
-        <jar jarfile="${dist.dir}/${ant.project.name}-v6-prod.war" basedir="${build.dir}"/>
+        <jar jarfile="${dist.dir}/${ant.project.name}-v7-prod.war" basedir="${build.dir}"/>
     </target>
     
 	<target name="client.jar" depends="compile">
