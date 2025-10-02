@@ -105,19 +105,23 @@ public class SiteSamplingDaoHibernateImpl implements SiteSamplingDao, Serializab
 			for (int i = 0; i < aliasToValueMapList.size(); i++) {
 				Map<String, Object> map = aliasToValueMapList.get(i);
 				SamplingData samplingData = new SamplingData();
-				if (map.get("amount") instanceof Integer) {
-					int amount= (Integer) map.get("amount");
-					samplingData.setData(amount * 1.0);
+
+				Object amountObj = map.get("amount");
+				if (amountObj instanceof Number) {
+					samplingData.setData(((Number) amountObj).doubleValue());
 				}
-				else if (map.get("amount") instanceof Double) {
-					double amount= (Double) map.get("amount");
-					samplingData.setData(amount);
-				}
+				
 				Date date = (Date) map.get("sampling_time");
 				if (date != null) {
 					samplingData.setYear(this.getYear(date));
 				}
-				samplingData.setRiverMile((Double) map.get("river_mile"));
+
+				Object rm = map.get("river_mile");
+				if (rm instanceof Number) {
+					samplingData.setRiverMile(((Number) rm).doubleValue());
+				} else {
+					samplingData.setRiverMile(null);
+				}
 
 				result.add(samplingData);
 
@@ -156,14 +160,25 @@ public class SiteSamplingDaoHibernateImpl implements SiteSamplingDao, Serializab
 		return macroinvertebrates;
 	}
 
-	// get fish counts for a specific site and specific fish
+	// get fish counts for a specific site and specific fish or entire river
 	@Override
 	public List<SamplingData> getFishCountsOverTime(int riverSiteId, int fishId) {
-		String queryName = "edu.columbia.riverlife.dal.getFishCountsOverTime";
 		Session session = sessionFactory.getCurrentSession();
+		String queryName;
+
+		if (riverSiteId == 0) {
+			queryName = "edu.columbia.riverlife.dal.getFishCountsOverTimeAllSites";
+		} else {
+			queryName = "edu.columbia.riverlife.dal.getFishCountsOverTime";
+		}
+
 		Query query = session.getNamedQuery(queryName);
-		query.setInteger("riverSiteId", riverSiteId);
 		query.setInteger("fishId", fishId);
+
+		if (riverSiteId != 0) {
+			query.setInteger("riverSiteId", riverSiteId);
+		}
+
 		query.setResultTransformer(AliasToEntityMapResultTransformer.INSTANCE);
 
 		@SuppressWarnings("unchecked")
@@ -191,11 +206,22 @@ public class SiteSamplingDaoHibernateImpl implements SiteSamplingDao, Serializab
 
 	@Override
 	public List<SamplingData> getMacroCountsOverTime(int riverSiteId, int macroId) {
-		String queryName = "edu.columbia.riverlife.dal.getMacroCountsOverTime";
 		Session session = sessionFactory.getCurrentSession();
+		String queryName;
+
+		if (riverSiteId == 0) {
+			queryName = "edu.columbia.riverlife.dal.getMacroCountsOverTimeAllSites";
+		} else {
+			queryName = "edu.columbia.riverlife.dal.getMacroCountsOverTime";
+		}
+
 		Query query = session.getNamedQuery(queryName);
-		query.setInteger("riverSiteId", riverSiteId);
 		query.setInteger("macroId", macroId);
+
+		if (riverSiteId != 0) {
+			query.setInteger("riverSiteId", riverSiteId);
+		}
+
 		query.setResultTransformer(AliasToEntityMapResultTransformer.INSTANCE);
 
 		@SuppressWarnings("unchecked")

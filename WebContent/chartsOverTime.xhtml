@@ -73,9 +73,9 @@ function exportChart() {
         	</p:selectOneRadio>
         	<h:outputText value=" " />
         	
-	        <p:outputLabel for="riverSite" value="River Site: *" />
+	        <p:outputLabel for="riverSite" value="River Site:" />
 	    	<p:selectOneMenu id="riverSite" value="#{chartsOverTimeBean.selectedRiverSite}">
-	            <f:selectItem itemLabel="Select One" itemValue="" />
+	            <f:selectItem itemLabel="Select One" itemValue="0" />
 	            <f:selectItems value="#{chartsOverTimeBean.riverSites}" />
 	        </p:selectOneMenu>
 	        <p:commandLink  onclick="PF('gmapDlg').show();">

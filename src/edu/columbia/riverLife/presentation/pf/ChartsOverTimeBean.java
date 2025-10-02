@@ -82,11 +82,17 @@ public class ChartsOverTimeBean extends ChartsBean {
 			FacesContext.getCurrentInstance().addMessage(null,
 					new FacesMessage(FacesMessage.SEVERITY_ERROR, "Validation Error:", "River is required."));
 		}
-		if (this.getSelectedRiverSite() == null) {
+
+		boolean allowNullRiverSite = 
+			(this.getFirstSelectedParamGroup() == null || (this.getFirstSelectedParamGroup() == FISH_GROUP_ID || this.getFirstSelectedParamGroup() == MACROINVERTIBRATE_GROUP_ID)) &&
+			(this.getSecondSelectedParamGroup() == null || (this.getSecondSelectedParamGroup() == FISH_GROUP_ID || this.getSecondSelectedParamGroup() == MACROINVERTIBRATE_GROUP_ID));
+
+		if (this.getSelectedRiverSite() == 0 && !allowNullRiverSite) {
 			error = true;
 			FacesContext.getCurrentInstance().addMessage(null,
-					new FacesMessage(FacesMessage.SEVERITY_ERROR, "Validation Error:", "River site is required."));
+				new FacesMessage(FacesMessage.SEVERITY_ERROR, "Validation Error:", "River site is required for Weather or Water Measurements."));
 		}
+
 		if (this.getFirstSelectedParam() == null && this.getSecondSelectedParam() == null) {
 			error = true;
 			FacesContext.getCurrentInstance().addMessage(null,
