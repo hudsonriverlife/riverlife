@@ -92,6 +92,10 @@ public class ChartsBean implements Serializable {
 	
 	public final static String PH="pH";
 	public final static int PH_ID=13;
+
+	public final static String SALT_FRONT = "Salt Front (River Mile)";
+	public final static int SALT_FRONT_ID = 14;
+
 	
 	@Inject
 	private RiverBo riverBo;
@@ -177,6 +181,7 @@ public class ChartsBean implements Serializable {
 		waterParams.add(new SelectItem(DISSOLVED_OXYGEN_ID, DISSOLVED_OXYGEN));
 		waterParams.add(new SelectItem(PERCENT_SATURATION_OXYGEN_ID, PERCENT_SATURATION_OXYGEN));
 		waterParams.add(new SelectItem(PH_ID, PH));
+		waterParams.add(new SelectItem(SALT_FRONT_ID, SALT_FRONT));
 		
 		params.add(waterParams);
 		
@@ -478,6 +483,8 @@ public class ChartsBean implements Serializable {
 					return PERCENT_SATURATION_OXYGEN;
 				case PH_ID:
 					return PH;
+				case SALT_FRONT_ID:
+    				return SALT_FRONT;
 				
 			}
 		}

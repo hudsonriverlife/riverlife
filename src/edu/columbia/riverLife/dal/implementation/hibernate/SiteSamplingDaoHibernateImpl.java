@@ -456,7 +456,11 @@ public class SiteSamplingDaoHibernateImpl implements SiteSamplingDao, Serializab
 		*/
 	}
 
-
+	@Override
+	public List<SamplingData> getSaltFrontOverTime(int riverId) {
+		String queryName = "edu.columbia.riverlife.dal.getSaltFrontOverTime";
+		return getSamplingDataOverTime(riverId, queryName);
+	}
 
 
 }

@@ -62,6 +62,6 @@ public interface SiteSamplingBo {
 	public List<SamplingData> getWindBeaufortRatingOverTime(Integer selectedRiverSite);
 	public List<SamplingData> getWindBeaufortRatingAlongRiver(int riverId, int year);
 	
-	
+	public List<SamplingData> getSaltFrontOverTime(int riverId);
 	
 }

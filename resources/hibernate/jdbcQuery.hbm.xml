@@ -289,4 +289,29 @@
            extract(year from ss.sampling_time) = :year order by rs.river_mile
         ]]>
     </sql-query>
+   <!-- Get Standardized Salinity Value that is closest to 100ppm, Hudson River Only -->
+   <sql-query name="edu.columbia.riverlife.dal.getSaltFrontOverTime">
+      <![CDATA[
+         SELECT total_salinity_ppm, sampling_time, river_mile as amount
+         FROM (
+            SELECT 
+               ss.total_salinity_ppm,
+               sampling.sampling_time,
+               site.river_mile,
+               EXTRACT(YEAR FROM sampling.sampling_time) AS year,
+               ROW_NUMBER() OVER (
+                     PARTITION BY EXTRACT(YEAR FROM sampling.sampling_time)
+                     ORDER BY ABS(ss.total_salinity_ppm - 100) ASC
+               ) AS rn
+            FROM riverlife.standardized_salinity ss
+            LEFT JOIN riverlife.site_sampling sampling 
+               ON ss.site_sampling_id = sampling.site_sampling_id
+            LEFT JOIN riverlife.river_site site 
+               ON sampling.river_site_id = site.river_site_id
+            WHERE site.river_id = :riverSiteId -- using variable name riverSiteId for reusing existing function, this is actually a riverId
+         ) AS ranked
+         WHERE rn = 1
+         ORDER BY year;
+      ]]>
+  </sql-query>
 </hibernate-mapping>

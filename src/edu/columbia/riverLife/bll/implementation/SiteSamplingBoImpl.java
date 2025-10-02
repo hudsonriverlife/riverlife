@@ -223,5 +223,10 @@ public class SiteSamplingBoImpl implements SiteSamplingBo, Serializable {
 
 	}
 
+	@Override
+	public List<SamplingData> getSaltFrontOverTime(int riverId) {
+		return this.siteSamplingDao.getSaltFrontOverTime(riverId);
+
+	}
 
 }

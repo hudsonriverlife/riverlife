@@ -83,14 +83,33 @@ public class ChartsOverTimeBean extends ChartsBean {
 					new FacesMessage(FacesMessage.SEVERITY_ERROR, "Validation Error:", "River is required."));
 		}
 
+		// allow null river site for searching fish/macros across entire river
+		// also allow for salt front
 		boolean allowNullRiverSite = 
-			(this.getFirstSelectedParamGroup() == null || (this.getFirstSelectedParamGroup() == FISH_GROUP_ID || this.getFirstSelectedParamGroup() == MACROINVERTIBRATE_GROUP_ID)) &&
-			(this.getSecondSelectedParamGroup() == null || (this.getSecondSelectedParamGroup() == FISH_GROUP_ID || this.getSecondSelectedParamGroup() == MACROINVERTIBRATE_GROUP_ID));
+			(this.getFirstSelectedParamGroup() == null || 
+				(
+					this.getFirstSelectedParamGroup() == FISH_GROUP_ID || 
+					this.getFirstSelectedParamGroup() == MACROINVERTIBRATE_GROUP_ID || 
+					(this.getFirstSelectedParam() == null || this.getFirstSelectedParam() == SALT_FRONT_ID)
+				)
+			) && (
+				this.getSecondSelectedParamGroup() == null || (
+					this.getSecondSelectedParamGroup() == FISH_GROUP_ID || 
+					this.getSecondSelectedParamGroup() == MACROINVERTIBRATE_GROUP_ID || 
+					(this.getSecondSelectedParam() == null || this.getSecondSelectedParam() == SALT_FRONT_ID)
+				)
+			);
 
 		if (this.getSelectedRiverSite() == 0 && !allowNullRiverSite) {
 			error = true;
 			FacesContext.getCurrentInstance().addMessage(null,
-				new FacesMessage(FacesMessage.SEVERITY_ERROR, "Validation Error:", "River site is required for Weather or Water Measurements."));
+				new FacesMessage(FacesMessage.SEVERITY_ERROR, "Validation Error:", "River site is required for Weather or Water Measurements (other than Salt Front)."));
+		}
+
+		if (this.getSelectedRiver() != 1 && (this.getFirstSelectedParam() == SALT_FRONT_ID || this.getSecondSelectedParam() == SALT_FRONT_ID)) {
+			error = true;
+			FacesContext.getCurrentInstance().addMessage(null,
+				new FacesMessage(FacesMessage.SEVERITY_ERROR, "Validation Error:", "Salt Front is only available for the Hudson River."));
 		}
 
 		if (this.getFirstSelectedParam() == null && this.getSecondSelectedParam() == null) {
@@ -176,6 +195,8 @@ public class ChartsOverTimeBean extends ChartsBean {
 					return this.siteSamplingBo.getOxygenSaturationOverTime(riverSiteId);
 				case PH_ID:
 					return this.siteSamplingBo.getPhOverTime(riverSiteId);
+				case SALT_FRONT_ID:
+					return this.siteSamplingBo.getSaltFrontOverTime(this.getSelectedRiver());
 					
 			}
 		}
