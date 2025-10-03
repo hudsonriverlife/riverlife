@@ -77,10 +77,24 @@ public class ChartsOverTimeBean extends ChartsBean {
 
 	public void doSubmit() {
 		boolean error=false;
-		if (this.getSelectedRiver() == null) {
+
+		boolean allowNullRiver = 
+			(this.getFirstSelectedParamGroup() == null || 
+				(
+					this.getFirstSelectedParamGroup() == FISH_GROUP_ID || 
+					this.getFirstSelectedParamGroup() == MACROINVERTIBRATE_GROUP_ID
+				)
+			) && (
+				this.getSecondSelectedParamGroup() == null || (
+					this.getSecondSelectedParamGroup() == FISH_GROUP_ID || 
+					this.getSecondSelectedParamGroup() == MACROINVERTIBRATE_GROUP_ID
+				)
+			);
+
+		if (this.getSelectedRiver() == 0 && !allowNullRiver) {
 			error = true;
 			FacesContext.getCurrentInstance().addMessage(null,
-					new FacesMessage(FacesMessage.SEVERITY_ERROR, "Validation Error:", "River is required."));
+					new FacesMessage(FacesMessage.SEVERITY_ERROR, "Validation Error:", "River is required for Weather or Water Measurements."));
 		}
 
 		// allow null river site for searching fish/macros across entire river
@@ -106,7 +120,10 @@ public class ChartsOverTimeBean extends ChartsBean {
 				new FacesMessage(FacesMessage.SEVERITY_ERROR, "Validation Error:", "River site is required for Weather or Water Measurements (other than Salt Front)."));
 		}
 
-		if (this.getSelectedRiver() != 1 && (this.getFirstSelectedParam() == SALT_FRONT_ID || this.getSecondSelectedParam() == SALT_FRONT_ID)) {
+		if (this.getSelectedRiver() != 1 && (
+				(this.getFirstSelectedParam() != null && this.getFirstSelectedParam() == SALT_FRONT_ID) || 
+				(this.getSecondSelectedParam() != null &&this.getSecondSelectedParam() == SALT_FRONT_ID)
+			)) {
 			error = true;
 			FacesContext.getCurrentInstance().addMessage(null,
 				new FacesMessage(FacesMessage.SEVERITY_ERROR, "Validation Error:", "Salt Front is only available for the Hudson River."));
@@ -164,9 +181,9 @@ public class ChartsOverTimeBean extends ChartsBean {
 		
 		switch (selectedGroup.intValue()) {
 			case FISH_GROUP_ID:
-				return this.siteSamplingBo.getFishCountsOverTime(this.getSelectedRiverSite(), selectedParam);
+				return this.siteSamplingBo.getFishCountsOverTime(this.getSelectedRiver(), this.getSelectedRiverSite(), selectedParam);
 			case MACROINVERTIBRATE_GROUP_ID:
-				return this.siteSamplingBo.getMacroCountsOverTime(this.getSelectedRiverSite(), selectedParam);
+				return this.siteSamplingBo.getMacroCountsOverTime(this.getSelectedRiver(), this.getSelectedRiverSite(), selectedParam);
 			default:
 				switch (selectedParam.intValue()) {
 				case AIR_TEMPERATURE_ID:

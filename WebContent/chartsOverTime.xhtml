@@ -60,7 +60,7 @@ function exportChart() {
 	        <p:outputLabel for="riverMenu" value="Rivers: *" />
 	    	<p:selectOneMenu id="riverMenu" value="#{chartsOverTimeBean.selectedRiver}">
 	    		<p:ajax event="valueChange"  listener= "#{chartsOverTimeBean.onRiverChange}" update="gmap, riverSite" />
-	            <f:selectItem itemLabel="Select One" itemValue="" />
+	            <f:selectItem itemLabel="Select One" itemValue="0" />
 	            <f:selectItems value="#{chartsOverTimeBean.rivers}" />
 	        </p:selectOneMenu>
 	        

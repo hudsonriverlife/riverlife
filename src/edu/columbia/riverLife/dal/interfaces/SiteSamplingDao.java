@@ -19,10 +19,10 @@ public interface SiteSamplingDao {
 
 	public List<RiverSite> getRiverSites();
 	
-	public List<SamplingData> getFishCountsOverTime(int riverSiteId, int fishId);
+	public List<SamplingData> getFishCountsOverTime(int riverId, int riverSiteId, int fishId);
 	public List<SamplingData> getFishCountsAlongRiver(int riverId, int year, int fishId);
 
-	public List<SamplingData> getMacroCountsOverTime(int riverSiteId, int macroId);
+	public List<SamplingData> getMacroCountsOverTime(int riverId, int riverSiteId, int macroId);
 	public List<SamplingData> getMacroCountsAlongRiver(int riverId, int year, int macroId);
 
 	public List<SamplingData> getStudentSalinityOverTime(int riverSiteId);

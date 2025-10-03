@@ -162,11 +162,13 @@ public class SiteSamplingDaoHibernateImpl implements SiteSamplingDao, Serializab
 
 	// get fish counts for a specific site and specific fish or entire river
 	@Override
-	public List<SamplingData> getFishCountsOverTime(int riverSiteId, int fishId) {
+	public List<SamplingData> getFishCountsOverTime(int riverId, int riverSiteId, int fishId) {
 		Session session = sessionFactory.getCurrentSession();
 		String queryName;
 
-		if (riverSiteId == 0) {
+		if (riverId == 0 ) {
+			queryName = "edu.columbia.riverlife.dal.getFishCountsOverTimeAllRivers";
+		} else if (riverSiteId == 0) {
 			queryName = "edu.columbia.riverlife.dal.getFishCountsOverTimeAllSites";
 		} else {
 			queryName = "edu.columbia.riverlife.dal.getFishCountsOverTime";
@@ -175,8 +177,12 @@ public class SiteSamplingDaoHibernateImpl implements SiteSamplingDao, Serializab
 		Query query = session.getNamedQuery(queryName);
 		query.setInteger("fishId", fishId);
 
-		if (riverSiteId != 0) {
-			query.setInteger("riverSiteId", riverSiteId);
+		if ( riverId !=0 ) {
+			if ( riverSiteId != 0 ) {
+				query.setInteger("riverSiteId", riverSiteId);
+			} else {
+				query.setInteger("riverId", riverId);
+			}
 		}
 
 		query.setResultTransformer(AliasToEntityMapResultTransformer.INSTANCE);
@@ -205,11 +211,13 @@ public class SiteSamplingDaoHibernateImpl implements SiteSamplingDao, Serializab
 	}
 
 	@Override
-	public List<SamplingData> getMacroCountsOverTime(int riverSiteId, int macroId) {
+	public List<SamplingData> getMacroCountsOverTime(int riverId, int riverSiteId, int macroId) {
 		Session session = sessionFactory.getCurrentSession();
 		String queryName;
 
-		if (riverSiteId == 0) {
+		if (riverId == 0 ) {
+			queryName = "edu.columbia.riverlife.dal.getMacroCountsOverTimeAllRivers";
+		} else if (riverSiteId == 0) {
 			queryName = "edu.columbia.riverlife.dal.getMacroCountsOverTimeAllSites";
 		} else {
 			queryName = "edu.columbia.riverlife.dal.getMacroCountsOverTime";
@@ -218,8 +226,12 @@ public class SiteSamplingDaoHibernateImpl implements SiteSamplingDao, Serializab
 		Query query = session.getNamedQuery(queryName);
 		query.setInteger("macroId", macroId);
 
-		if (riverSiteId != 0) {
-			query.setInteger("riverSiteId", riverSiteId);
+		if ( riverId !=0 ) {
+			if ( riverSiteId != 0 ) {
+				query.setInteger("riverSiteId", riverSiteId);
+			} else {
+				query.setInteger("riverId", riverId);
+			}
 		}
 
 		query.setResultTransformer(AliasToEntityMapResultTransformer.INSTANCE);

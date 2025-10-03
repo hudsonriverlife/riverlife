@@ -51,8 +51,8 @@ public class SiteSamplingBoImpl implements SiteSamplingBo, Serializable {
 	}
 
 	@Override
-	public List<SamplingData> getFishCountsOverTime(int riverSiteId, int macroId) {
-		return this.siteSamplingDao.getFishCountsOverTime(riverSiteId, macroId);
+	public List<SamplingData> getFishCountsOverTime(int riverId, int riverSiteId, int macroId) {
+		return this.siteSamplingDao.getFishCountsOverTime(riverId, riverSiteId, macroId);
 	}
 
 	@Override
@@ -62,8 +62,8 @@ public class SiteSamplingBoImpl implements SiteSamplingBo, Serializable {
 	}
 	
 	@Override
-	public List<SamplingData> getMacroCountsOverTime(int riverSiteId, int macroId) {
-		return this.siteSamplingDao.getMacroCountsOverTime(riverSiteId, macroId);
+	public List<SamplingData> getMacroCountsOverTime(int riverId, int riverSiteId, int macroId) {
+		return this.siteSamplingDao.getMacroCountsOverTime(riverId, riverSiteId, macroId);
 	}
 	
 	@Override
