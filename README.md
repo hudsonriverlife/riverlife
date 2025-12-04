@@ -23,6 +23,6 @@ To deploy the app to a Tomcat server you can copy the .war package to the webapp
 Example Commands:
 
 * ```service grg-tomcat stop```
-* ```cp ~/riverlife-v7-prod.war /opt/server/tomcat/webapps/riverlife.war```
+* ```cp ~/riverlife-v8-prod.war /opt/server/tomcat/webapps/riverlife.war```
 * ```rm -rf /opt/server/tomcat/webapps/riverlife```
 * ```service grg-tomcat start```
