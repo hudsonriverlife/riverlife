@@ -19,7 +19,7 @@ WORKDIR /usr/local/tomcat
 
 RUN rm -rf webapps/*
 
-COPY --from=builder /app/dist/riverlife-v8-prod.war webapps/ROOT.war
+COPY --from=builder /app/dist/riverlife-v8-prod.war webapps/riverlife.war
 
 EXPOSE 8080
 CMD ["catalina.sh", "run"]
